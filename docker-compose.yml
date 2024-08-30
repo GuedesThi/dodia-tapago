@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  dodiatapago-postgres:
+    image: bitnami/postgresql:14
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=oguedes
+      - POSTGRESQL_PASSWORD=@Thiago21
+      - POSTGRESQL_DATABASE=dodia_db

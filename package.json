@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/server.js",
+    "dev": "docker compose up -d && tsx watch src/server.js",
+    "services:stop": "docker stop gympass-dodiatapago-postgres-1",
     "start": "node build/server.js",
     "build": "tsup src --out-dir build"
   },
@@ -12,12 +13,16 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/bcryptjs": "2.4.6",
     "@types/node": "22.5.0",
+    "prisma": "5.18.0",
     "tsup": "8.2.4",
     "tsx": "4.17.0",
     "typescript": "5.5.4"
   },
   "dependencies": {
+    "@prisma/client": "5.18.0",
+    "bcryptjs": "2.4.3",
     "dotenv": "16.4.5",
     "fastify": "4.28.1",
     "zod": "3.23.8"
