@@ -1,2 +1,10 @@
 src/http/controllers/registerController.ts
 src/services/registerService.ts
+src/services/authenticateService.ts
+src/http/controllers/authenticateController.ts
+src/services/get-user-profileService.ts
+src/services/checkinService.ts
+src/utils/get-distance-between-coordinates.ts
+src/services/gymService.ts
+src/services/checkins-historyService.ts
+src/services/get-user-metrics.ts

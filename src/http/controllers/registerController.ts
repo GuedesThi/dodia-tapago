@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import { PrismaUserRepository } from "src/repositories/prismaUserRepository";
-import { RegisterService } from "src/services/registerService";
 import { z } from "zod";
+import { UserAlreadyExistsError } from "../../services/erros/user-already-exists";
+import { registerFactory } from "../../services/factories/registerFactory";
 
 // Objetivo: cadastrar usuários no banco de dados, com dados enviados por requisições do path "/users";
 export async function registerController(request: FastifyRequest, reply: FastifyReply) {
@@ -18,14 +18,19 @@ export async function registerController(request: FastifyRequest, reply: Fastify
 
   // Usa o service para cadastrar o usuário no banco, para isso envia o repository por parâmetro (Injeção de Dependência);
   try {
-    const userRepository = new PrismaUserRepository();
-    const registerService = new RegisterService(userRepository);
+    const registerService = registerFactory("prisma");
 
     await registerService.run({name, email, password});
   
   // Se o service retorna um "409" é porque o email enviado já existe no banco de dados;
   } catch (error) {
-    return reply.status(409).send("O email informado já existe no sistema");
+
+    if (error instanceof UserAlreadyExistsError) {
+      return reply.status(409).send({ message: error.message });
+    }
+
+    throw error
+
   }
 
   // Se tudo der certo retorna um "201" de criado;

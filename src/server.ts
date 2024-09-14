@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { fastify } from "fastify";
 import { env } from "./env";
 import { routes } from "./http/routes/routes";
+import { ZodError } from "zod";
 
 export const app = fastify();
 
@@ -10,6 +11,18 @@ export const prisma = new PrismaClient({
 });
 
 app.register(routes);
+
+app.setErrorHandler((error, request, reply) => {
+  if (error instanceof ZodError) {
+    return reply
+      .status(400)
+      .send({ message: "Erro de cadastro", issues: error.format() });
+  } else if (env.NODE_ENV !== "production") {
+    console.error(error);
+  }
+
+  return reply.status(400).send({ message: "Internal server error" });
+});
 
 app
   .listen({
