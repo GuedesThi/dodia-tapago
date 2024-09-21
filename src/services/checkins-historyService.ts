@@ -18,10 +18,7 @@ export class CheckinsHistoryService {
   }
 
   async execute({ userId, page }: CheckinsHistoryRequest): Promise<CheckinsHistoryResponse> {
-    const checkins = await this.checkinRepository.findManyByUserId(
-      userId,
-      page
-    );
+    const checkins = await this.checkinRepository.findManyByUserId(userId, page);
 
     return { checkins };
   }

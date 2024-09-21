@@ -3,6 +3,7 @@ import { fastify } from "fastify";
 import { env } from "./env";
 import { routes } from "./http/routes/routes";
 import { ZodError } from "zod";
+import fastifyJwt from "@fastify/jwt";
 
 export const app = fastify();
 
@@ -10,13 +11,15 @@ export const prisma = new PrismaClient({
   log: env.NODE_ENV === "dev" ? ["query"] : [],
 });
 
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+});
+
 app.register(routes);
 
 app.setErrorHandler((error, request, reply) => {
   if (error instanceof ZodError) {
-    return reply
-      .status(400)
-      .send({ message: "Erro de cadastro", issues: error.format() });
+    return reply.status(400).send({ message: "Erro de cadastro", issues: error.format() });
   } else if (env.NODE_ENV !== "production") {
     console.error(error);
   }
