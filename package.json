@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "docker compose up -d && tsx watch src/server.js",
     "services:stop": "docker stop gympass-dodiatapago-postgres-1",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vitest run --dir src/tests/services",
+    "test:e2e": "vitest run --dir src/tests/controllers",
+    "pretest:e2e": "cd prisma/vitest-environment-prisma && npm link && cd ../.. && npm link vitest-environment-prisma",
+    "test:watch": "vitest --dir src/tests/services",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "start": "node build/server.js",
