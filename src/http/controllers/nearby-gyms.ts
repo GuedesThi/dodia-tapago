@@ -4,10 +4,10 @@ import { NearbyGymsFactory } from "../../services/factories/nearby-gyms-factory"
 
 export async function nearbyGymsController(request: FastifyRequest, reply: FastifyReply) {
   const nearbyGymsQuerySchema = z.object({
-    userLatitude: z.number().refine((lat) => {
+    userLatitude: z.coerce.number().refine((lat) => {
       return Math.abs(lat) <= 90;
     }),
-    userLongitude: z.number().refine((lat) => {
+    userLongitude: z.coerce.number().refine((lat) => {
       return Math.abs(lat) <= 180;
     }),
   });
