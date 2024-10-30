@@ -4,6 +4,7 @@ import { env } from "./env";
 import { routes } from "./http/routes/routes";
 import { ZodError } from "zod";
 import fastifyJwt from "@fastify/jwt";
+import fastifyCookie from "@fastify/cookie";
 
 export const app = fastify();
 
@@ -11,8 +12,16 @@ export const prisma = new PrismaClient({
   log: env.NODE_ENV === "dev" ? ["query"] : [],
 });
 
+app.register(fastifyCookie);
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
+  sign: {
+    expiresIn: "10min",
+  },
+  cookie: {
+    cookieName: "refreshToken",
+    signed: false,
+  },
 });
 
 app.register(routes);

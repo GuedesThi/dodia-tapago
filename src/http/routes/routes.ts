@@ -10,11 +10,15 @@ import { createCheckinController } from "../controllers/create-checkin";
 import { validateCheckinController } from "../controllers/validate-checkin";
 import { checkinsHistoryController } from "../controllers/checkins-history";
 import { userMetricsController } from "../controllers/user-metrics";
+import { refreshController } from "../controllers/refresh";
 
 export async function routes(app: FastifyInstance) {
   // Rotas para User <Usuário não precisa estar autenticado>
   app.post("/users", registerController);
   app.post("/authenticate", authenticateController);
+
+  // Rota para quando o usuário perder sua autenticação (patch serve pra atualizar um único ou poucos valores)
+  app.patch("/token/refresh", refreshController);
 
   // Rotas para User <Usuário deve estar autenticado>
   app.get("/me", { onRequest: [verifyJWT] }, profileController);
