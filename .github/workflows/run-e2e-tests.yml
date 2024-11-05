@@ -31,3 +31,4 @@ jobs:
         env:
           JWT_SECRET: testing
           DATABASE_URL: "postgresql://oguedes:@Thiago21@localhost:5432/dodia_db?schema=public"
+          NODE_ENV: ci
