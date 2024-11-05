@@ -14,7 +14,7 @@ jobs:
           - 5432:5432
         env:
           POSTGRESQL_USERNAME: oguedes
-          POSTGRESQL_PASSWORD: @Thiago21
+          POSTGRESQL_PASSWORD: "@Thiago21"
           POSTGRESQL_DATABASE: dodia_db
 
     steps:
