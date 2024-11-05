@@ -12,7 +12,7 @@ jobs:
         image: bitnami/postgresql:14
         ports:
           - 5432:5432
-        environment:
+        env:
           - POSTGRESQL_USERNAME=oguedes
           - POSTGRESQL_PASSWORD=@Thiago21
           - POSTGRESQL_DATABASE=dodia_db
