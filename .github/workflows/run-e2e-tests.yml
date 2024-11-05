@@ -13,9 +13,9 @@ jobs:
         ports:
           - 5432:5432
         env:
-          - POSTGRESQL_USERNAME=oguedes
-          - POSTGRESQL_PASSWORD=@Thiago21
-          - POSTGRESQL_DATABASE=dodia_db
+          POSTGRESQL_USERNAME: oguedes
+          POSTGRESQL_PASSWORD: @Thiago21
+          POSTGRESQL_DATABASE: dodia_db
 
     steps:
       - uses: actions/checkout@v4
