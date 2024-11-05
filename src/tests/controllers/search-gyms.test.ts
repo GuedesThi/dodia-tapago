@@ -1,6 +1,7 @@
 import { expect, describe, it, beforeEach, afterEach } from "vitest";
 import request from "supertest";
-import { app } from "../../server";
+import { app, prisma } from "../../server";
+import { hash } from "bcryptjs";
 
 describe("Tests E2E for Search Gyms Controller", () => {
   beforeEach(async () => {
@@ -12,10 +13,13 @@ describe("Tests E2E for Search Gyms Controller", () => {
   });
 
   it("Deve ser possível buscar academias", async () => {
-    await request(app.server).post("/users").send({
-      name: "Thiago Santos",
-      email: "thiagosantos@gmail.com",
-      password: "123456",
+    await prisma.user.create({
+      data: {
+        name: "Thiago Guedes",
+        email: "thiagosantos@gmail.com",
+        password_hash: await hash("123456", 6),
+        role: "ADMIN",
+      },
     });
 
     const auth = await request(app.server).post("/authenticate").send({

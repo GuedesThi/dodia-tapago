@@ -36,10 +36,15 @@ app.setErrorHandler((error, request, reply) => {
   return reply.status(400).send({ message: "Internal server error" });
 });
 
+const port = 2000 + Math.floor(Math.random() * 1000);
+//const port = 3333;
+
 app
   .listen({
-    port: env.PORT,
+    //port: env.PORT,
+    port,
   })
   .then(() => {
     console.log("⚙🔥Server's running...");
+    console.log(port);
   });
