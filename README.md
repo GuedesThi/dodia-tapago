@@ -2,4 +2,4 @@
 
 ---
 
-(obs: prometo)
+(obs: projeto finalizado com sucesso)
